@@ -67,6 +67,8 @@ def get_model_config(
             config = SimpleNamespace(**text_config)
         else:
             config = text_config
+    elif hasattr(config, "llm_config"):
+        config = config.llm_config
 
     hidden_size = config.hidden_size
     if architecture == "DbrxForCausalLM":
@@ -150,6 +152,7 @@ def get_model_config(
         "BailingMoeForCausalLM",
         "BailingMoeV2ForCausalLM",
         "BailingMoeV3ForCausalLM",
+        "BailingMoeV3VLForConditionalGeneration"
     ]:
         E = config.num_experts // ep_size
         topk = config.num_experts_per_tok
